@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    
+    <title>My Safe</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../Client/stylesheets/main.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="javascripts/helpers/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="javascripts/controllers/index.js"></script>
+    
+</head>
+<body>
+    <div class="menu">       
+            <a href="index.html">
+              <img src="../Client/image/logo.png" alt="logo" class="img">
+            </a>
+          
+        <div>
+          <button id="connecter"  onclick="window.close(); window.open('login.html','_self');">Se connecter</button>
+        </div>
+      </div>
+      <h1>MySafe</h1>
+      <div class="section">
+        <label class="secu">Sécurity Level</label>
+     
+       
+        <div>
+          <button id="un">1</button>
+          <button id="deux">2</button>
+          <button id="trois">3</button>
+          <button id="go">Générer</button>
+        </div>
+        <label for="input"></label>
+        <input id="input" >
+      </div>
+    
+</body>
+</html>
