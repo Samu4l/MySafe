@@ -9,9 +9,14 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/index.js"></script>
-    <script src="js/login.js"></script>
     <script src="js/serviceHttp.js"></script>
+    <script src="js/index.js"></script> <!-- Correction : Référence vers index.js -->
+    <script src="js/login.js"></script>
+    <script src="js/app.js"></script>
+    <link rel="apple-touch-icon" href="image/logo.png">
+    <meta name="apple-mobile-web-app-status-bar" content="ie=edge">
+    <meta http-equiv="Y-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="white">
 </head>
 
 <body>
@@ -22,7 +27,7 @@
 
     <main>
         <h2>Connexion</h2>
-        <input type="password" placeholder="Code PIN" maxlength="6" id="pinInput"><br>
+        <input type="password" maxlength="6" id="pinInput"><br>
         <button id="fingerprintButton">Utiliser l'empreinte digitale</button><br>
         <button id="registerButton">S'inscrire</button>
     </main>
