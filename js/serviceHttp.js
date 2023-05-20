@@ -56,33 +56,9 @@ function getJson(mail, pin) {
         return null;
       });
   }
-  
-/*
-function getJsonId(id) {
-  var myHeaders = new Headers();
-  myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
-
-  var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-  };
-
-  fetch("https://api.myjson.online/v1/collections/4e329be0-f251-426e-9d68-4689f970aad8/"+ id, requestOptions)
-      .then(response => response.json())
-      .then(result => {
-          console.log(result);
-
-     
-          return result;
-      })
-      .catch(error => console.log('error', error));
-}
 
 
-*/
-
-function sendJson(email, nom, prenom, pin, mdp, keyValuePairs) {
+function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
@@ -93,7 +69,8 @@ function sendJson(email, nom, prenom, pin, mdp, keyValuePairs) {
       prenom: prenom,
       pin: pin,
       psw: mdp,
-      keyValuePairs: keyValuePairs
+      keyValuePairs: keyValuePairs,
+      credit: credential
     };
   
     var urlencoded = new URLSearchParams();
