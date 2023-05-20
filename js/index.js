@@ -1,8 +1,5 @@
-function login(ok){
-    if(ok == true){
-        log("ça avance bb");
-    }
-}
+
+
 $(document).ready(function() {
 const registerButton = $("#registerButton");
 
@@ -12,4 +9,10 @@ registerButton.on("click", function() {
   window.location.href = "register.html";
 
 });
+
+function loginOK(){    
+  log("ça avance bb");
+  window.location.href="connecter.html";
+}
+
 });
