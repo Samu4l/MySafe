@@ -39,6 +39,7 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
+
 self.addEventListener('activate', function(event) {
   var cacheWhitelist = [mysafeCache]; // Modification : Utilisation d'un tableau pour cacheWhitelist
   event.waitUntil(

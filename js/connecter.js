@@ -79,10 +79,6 @@ var mdp= $("#mdp");
 
   });
 
-
-
-
-
   var shakeThreshold = 100; // Seuil de secousse (à ajuster selon vos besoins)
   var lastShakeTime = 0;
 

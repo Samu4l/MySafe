@@ -29,6 +29,7 @@ function getJson(mail, pin) {
       });
   }
 
+
   function getJsonId(email) {
     var myHeaders = new Headers();
     myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
@@ -40,7 +41,12 @@ function getJson(mail, pin) {
     };
   
     return fetch("https://api.myjson.online/v1/collections/4e329be0-f251-426e-9d68-4689f970aad8/records", requestOptions)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Erreur lors de la récupération des données JSON");
+        }
+        return response.json();
+      })
       .then(result => {
         var userData = null;
   
@@ -50,13 +56,15 @@ function getJson(mail, pin) {
           }
         });
   
-        return userData;
+        return userData; // Renvoyer la réponse JSON complète
       })
       .catch(error => {
         console.log('Erreur lors de la récupération des données JSON :', error);
         return null;
       });
   }
+  
+
 
 
 function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
@@ -89,7 +97,7 @@ function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
       .then(response => response.json())
       .then(result => {
         console.log(result);
-        return true;
+        return result;
       })
       .catch(error => {
         console.log('error', error);
@@ -97,42 +105,50 @@ function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
       });
   }
 
-
-
   function moJson(key, value) {
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
-  
     // Récupérer le JSON existant
-    fetch("https://api.myjson.online/v1/records/" + searchJsonId(sessionStorage.getItem("email")), { method: 'GET', headers: myHeaders })
-      .then(response => response.json())
+    return getJsonId(sessionStorage.getItem("email"))
       .then(jsonData => {
-        // Vérifier si keyValuePairs existe déjà dans le JSON
-        if (jsonData.hasOwnProperty("keyValuePairs")) {
-          // Ajouter la nouvelle entrée dans keyValuePairs
-          jsonData.keyValuePairs.push({ [key]: value });
-        } else {
-          // Créer keyValuePairs et ajouter la nouvelle entrée
-          jsonData.keyValuePairs = [{ [key]: value }];
+        console.log(jsonData);
+        var userData = { ...jsonData }; // Copier les données JSON existantes
+  
+        if (userData.id === sessionStorage.getItem("email")) {
+          // Vérifier si keyValuePairs existe déjà dans le JSON
+          if (userData.hasOwnProperty("keyValuePairs")) {
+            // Ajouter la nouvelle entrée dans keyValuePairs
+            userData.keyValuePairs.push({ [key]: value });
+            console.log(userData.keyValuePairs);
+          } else {
+            // Créer keyValuePairs et ajouter la nouvelle entrée
+            userData.keyValuePairs = [{ [key]: value }];
+          }
         }
   
-        // Envoyer les données modifiées via l'API PATCH
-        var requestOptions = {
-          method: 'PATCH',
-          headers: myHeaders,
-          body: JSON.stringify(jsonData),
-          redirect: 'follow'
-        };
+        return searchJsonId(sessionStorage.getItem("email"))
+          .then(recordID => {
+            console.log(recordID);
+            var urlencoded = new URLSearchParams();
+            urlencoded.append("jsonData", JSON.stringify(userData));
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+            myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
   
-        return fetch("https://api.myjson.online/v1/records/" + searchJsonId(sessionStorage.getItem("email")), requestOptions);
-      })
-      .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+            var requestOptions = {
+              method: 'PATCH',
+              headers: myHeaders,
+              body: urlencoded,
+              redirect: 'follow'
+            };
+  
+            return fetch("https://api.myjson.online/v1/records/"+recordID, requestOptions);
+          })
+          .then(response => response.json())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      });
   }
   
-  
+ 
 
   function searchJsonId(email) {
     var myHeaders = new Headers();
@@ -144,64 +160,68 @@ function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
       redirect: 'follow'
     };
   
-    return fetch("https://api.myjson.online/v1/collections/4e329be0-f251-426e-9d68-4689f970aad8/records", requestOptions)
+      return fetch("https://api.myjson.online/v1/collections/4e329be0-f251-426e-9d68-4689f970aad8/records", requestOptions)
       .then(response => response.json())
       .then(result => {
-        var userData = null;
-  
-        result.records.forEach(function(item) {
-          if (item.data.id === email) {
-            userData = item.id;
-          }
-        });
-  
-        return userData;
+        var userData = result.records.find(item => item.data.id === email);
+
+        if (userData) {
+          return userData.id;
+        } else {
+          throw new Error("ID introuvable");
+        }
       })
       .catch(error => {
         console.log('Erreur lors de la récupération des données JSON :', error);
-        return null;
+        throw error;
       });
   }
+       
+     
 
-  
   function suppJson(key, value) {
-    var myHeaders = new Headers();
-    myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
-  
-    var requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-  
-    fetch("https://api.myjson.online/v1/records/" + searchJsonId(sessionStorage.getItem("email")), requestOptions)
-      .then(response => response.json())
-      .then(jsonData => {
-        // Vérifier si keyValuePairs existe dans le JSON
-        if (jsonData.hasOwnProperty("keyValuePairs")) {
-          // Rechercher l'index de l'entrée spécifique à supprimer
-          var index = jsonData.keyValuePairs.findIndex(item => {
-            return item.hasOwnProperty(key) && item[key] === value;
+     // Récupérer le JSON existant
+     return getJsonId(sessionStorage.getItem("email"))
+     .then(jsonData => {
+       console.log(jsonData);
+       var userData = { ...jsonData }; // Copier les données JSON existantes
+ 
+       if (userData.id === sessionStorage.getItem("email")) {
+         // Vérifier si keyValuePairs existe déjà dans le JSON
+         if (userData.hasOwnProperty("keyValuePairs")) {
+          // Supprimer l'entrée spécifique du tableau keyValuePairs
+          userData.keyValuePairs = userData.keyValuePairs.filter(item => {
+            return !(item.hasOwnProperty(key) && item[key] === value);
           });
-  
-          // Supprimer l'entrée spécifique en utilisant l'index
-          if (index !== -1) {
-            jsonData.keyValuePairs.splice(index, 1);
-          }
+          console.log(userData.keyValuePairs);
         }
+      }
+ 
+       return searchJsonId(sessionStorage.getItem("email"))
+         .then(recordID => {
+           console.log(recordID);
+           var urlencoded = new URLSearchParams();
+           urlencoded.append("jsonData", JSON.stringify(userData));
+           var myHeaders = new Headers();
+           myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+           myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
+ 
+           var requestOptions = {
+             method: 'PATCH',
+             headers: myHeaders,
+             body: urlencoded,
+             redirect: 'follow'
+           };
+ 
+           return fetch("https://api.myjson.online/v1/records/9c142eb9-910a-43d6-9d4e-283a5f046d49", requestOptions);
+         })
+         .then(response => response.json())
+         .then(result => console.log(result))
+         .catch(error => console.log('error', error));
+        
+     });
+    }
+ 
+    
   
-        // Envoyer les données modifiées via l'API PATCH pour mettre à jour le JSON
-        var requestOptions = {
-          method: 'PATCH',
-          headers: myHeaders,
-          body: JSON.stringify(jsonData),
-          redirect: 'follow'
-        };
-  
-        return fetch("https://api.myjson.online/v1/records/" + searchJsonId(sessionStorage.getItem("email")), requestOptions);
-      })
-      .then(response => response.json())
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
-  }
   
