@@ -1,7 +1,10 @@
 $(document).ready(function() {
   var btnDeco = $("#logoutButton");
-
+var btnAdd = $("#addData");
+var url= $("#url");
+var mdp= $("#mdp");
   var email = sessionStorage.getItem("email"); // Récupérer l'e-mail depuis le sessionStorage
+
 
   // Appeler la fonction pour récupérer les données JSON de l'utilisateur
   getJsonId(email)
@@ -39,13 +42,24 @@ $(document).ready(function() {
 
         // Ajouter un gestionnaire d'événements pour le bouton de suppression
         deleteButton.on("click", function() {
-          // Supprimer la paire clé-valeur du tableau et mettre à jour l'affichage
-          var index = keyValuePairs.indexOf(pair);
-          if (index > -1) {
-            keyValuePairs.splice(index, 1);
-            row.remove();
-          }
+          // Obtenir les valeurs URL et mot de passe de l'entrée
+          var urlValue = $(this).closest("tr").find("input[type='text']").val();
+          var passwordValue = $(this).closest("tr").find("input[type='password']").val();
+          // Appeler la fonction suppJson pour supprimer l'entrée de l'API
+          suppJson(urlValue, passwordValue)
+            .then(() => {
+              // Supprimer la paire clé-valeur du tableau et mettre à jour l'affichage
+              var index = keyValuePairs.indexOf(pair);
+              if (index > -1) {
+                keyValuePairs.splice(index, 1);
+                row.remove();
+              }
+            })
+            .catch(error => {
+              console.log("Erreur lors de la suppression de l'entrée de l'API :", error);
+            });
         });
+
 
         // Ajouter les cellules à la ligne
         row.append(urlCell, passwordCell, deleteButtonCell);
@@ -56,6 +70,18 @@ $(document).ready(function() {
   .catch(error => {
     console.log("Erreur lors de la récupération des données JSON :", error);
   });
+
+
+  btnAdd.on("click",function (event){
+
+    moJson(url.val(),mdp.val());
+
+
+  });
+
+
+
+
 
   var shakeThreshold = 100; // Seuil de secousse (à ajuster selon vos besoins)
   var lastShakeTime = 0;
