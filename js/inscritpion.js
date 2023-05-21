@@ -1,11 +1,13 @@
 const challenge = new Uint8Array(32);
 crypto.getRandomValues(challenge);
+
 const publicKeyOptions = {
   challenge,
   rp: {name: "MySafe", id: "ballamans.emf-informatique.ch"},
   user:{id: strToUint8("DE4DB33F"), displayName: "Ballaman samuel", name:"Ballaman Samuel"},
   pubKeyCredParams: [{alg: -7, type:"public-key"}],
-  attestation: "direct"
+  attestation: "direct",
+ 
 };
 function strToUint8(txt){
   return Uint8Array.from(txt, (s)=>s.charCodeAt(0));
@@ -30,7 +32,8 @@ $(document).ready(function() {
       .then(function(credential) {
         newCredentialInfo = credential.rawId; // Stocker les informations de la nouvelle clé dans la variable globale
         console.log(newCredentialInfo);
-        
+        localStorage.setItem('publicKey', credential.response.publicKey);
+
        
       })
       .catch(function(error) {
@@ -46,18 +49,20 @@ $(document).ready(function() {
         return;
       }
   console.log(newCredentialInfo);
-      var keyValuePairs = "";
+      var keyValuePairs = [
+      ];
       console.log(email);
       console.log(nom);
       console.log(prenom);
       console.log(pin);
        // Utilisation de la fonction arrayBufferToBase64 pour convertir newCredentialInfo en une représentation JSON lisible
   var credentialJSON = arrayBufferToBase64(newCredentialInfo);
+
   
       // Utilisez newCredentialInfo pour obtenir l'identifiant unique du credential
       var ok = sendJson(email.val(), nom.val(), prenom.val(), pin.val(), password.val(), keyValuePairs, credentialJSON);
       if (ok) {
-        //window.location.href = "index.html";
+        window.location.href = "index.html";
       } else {
         console.log("error syntaxe");
       }
