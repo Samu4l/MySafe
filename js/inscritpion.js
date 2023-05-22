@@ -62,7 +62,7 @@ $(document).ready(function() {
       // Utilisez newCredentialInfo pour obtenir l'identifiant unique du credential
       var ok = sendJson(email.val(), nom.val(), prenom.val(), pin.val(), password.val(), keyValuePairs, credentialJSON);
       if (ok) {
-        window.location.href = "index.html";
+      //  window.location.href = "index.html";
       } else {
         console.log("error syntaxe");
       }

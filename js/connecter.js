@@ -7,6 +7,7 @@ var mdp= $("#mdp");
 
 
   // Appeler la fonction pour récupérer les données JSON de l'utilisateur
+  function affiche(){
   getJsonId(email)
   .then(userData => {
     // Vérifier si les données utilisateur existent
@@ -71,11 +72,12 @@ var mdp= $("#mdp");
     console.log("Erreur lors de la récupération des données JSON :", error);
   });
 
+  }
 
   btnAdd.on("click",function (event){
 
     moJson(url.val(),mdp.val());
-
+    affiche();
 
   });
 

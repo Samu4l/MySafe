@@ -213,7 +213,7 @@ function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
              redirect: 'follow'
            };
  
-           return fetch("https://api.myjson.online/v1/records/9c142eb9-910a-43d6-9d4e-283a5f046d49", requestOptions);
+           return fetch("https://api.myjson.online/v1/records/"+recordID, requestOptions);
          })
          .then(response => response.json())
          .then(result => console.log(result))
