@@ -1,6 +1,7 @@
 body {
   padding-top: 40px;
   text-align: center;
+  background-color: #f6f7fc;
 }
 
 .container {
@@ -14,7 +15,7 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-  background-color: #ffffff;
+  background-color: #f6f7fc;
   padding: 10px;
 }
 

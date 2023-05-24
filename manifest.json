@@ -4,7 +4,7 @@
     "description": "Une application de gestion de mots de passe",
     "start_url": "index.html",
     "display": "standalone",
-    "background_color": "#ffffff",
+    "background_color": "#f6f7fc",
     "theme_color": "#2196f3",
     "orientation": "portrait-primary",
     "icons": [

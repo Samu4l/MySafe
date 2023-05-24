@@ -1,14 +1,16 @@
 const challenge = new Uint8Array(32);
 crypto.getRandomValues(challenge);
 
+
+
 const publicKeyOptions = {
   challenge,
-  rp: {name: "MySafe", id: "ballamans.emf-informatique.ch"},
-  user:{id: strToUint8("DE4DB33F"), displayName: "Ballaman samuel", name:"Ballaman Samuel"},
-  pubKeyCredParams: [{alg: -7, type:"public-key"}],
+  rp: { name: "MySafe", id: "www.ballamans.emf-informatique.ch" },
+  user: { id: strToUint8("DE4DB33F"), displayName: "Ballaman Samuel", name: "Ballaman Samuel" },
+  pubKeyCredParams: [{ alg: -7, type: "public-key" }, { type: "public-key", alg: -257 }],
   attestation: "direct",
- 
 };
+
 function strToUint8(txt){
   return Uint8Array.from(txt, (s)=>s.charCodeAt(0));
 }
@@ -25,22 +27,22 @@ $(document).ready(function() {
   var btnFinger = $("#AddFinger");
 
   
-  var newCredentialInfo; // Déclarer la variable globale pour stocker les informations de la nouvelle clé
+  
 
-  btnFinger.on("click", function (event){
+  btnFinger.on("click", function(event) {
     navigator.credentials.create({ "publicKey": publicKeyOptions })
-      .then(function(credential) {
-        newCredentialInfo = credential.rawId; // Stocker les informations de la nouvelle clé dans la variable globale
-        console.log(newCredentialInfo);
-        localStorage.setItem('publicKey', credential.response.publicKey);
-
-       
+      .then(function(credential) { 
+        localStorage.setItem('credentialid', credential.id);
+        console.log(credential.id);
+        localStorage.setItem('credential', credential.rawId);
+        
+        
       })
       .catch(function(error) {
-        // Gérez les erreurs de manière appropriée
         console.error(error);
       });
   });
+
   
   navigator.serviceWorker.addEventListener('message', function(event) {
     if (event.data.type === 'offline') {
@@ -55,7 +57,7 @@ $(document).ready(function() {
         alert("Les mots de passe ne correspondent pas");
         return;
       }
-  console.log(newCredentialInfo);
+ 
       var keyValuePairs = [
       ];
       console.log(email);
@@ -63,13 +65,13 @@ $(document).ready(function() {
       console.log(prenom);
       console.log(pin);
        // Utilisation de la fonction arrayBufferToBase64 pour convertir newCredentialInfo en une représentation JSON lisible
-  var credentialJSON = arrayBufferToBase64(newCredentialInfo);
+    var credentialJSON = localStorage.getItem("credential");
 
   
       // Utilisez newCredentialInfo pour obtenir l'identifiant unique du credential
       var ok = sendJson(email.val(), nom.val(), prenom.val(), pin.val(), password.val(), keyValuePairs, credentialJSON);
       if (ok) {
-      //  window.location.href = "index.html";
+        window.location.href = "index.html";
       } else {
         console.log("error syntaxe");
       }
@@ -77,13 +79,7 @@ $(document).ready(function() {
       console.log("error:", error);
     }
   });
-
-  function arrayBufferToBase64(arrayBuffer) {
-    const uint8Array = new Uint8Array(arrayBuffer);
-    const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
-    return base64String;
-  }
-  
  
-  });
+ 
+}); 
 
