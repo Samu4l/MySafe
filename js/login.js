@@ -9,7 +9,8 @@ $(document).ready(function () {
       const challenge = new Uint8Array(32);
       crypto.getRandomValues(challenge);
       
-      const credentialstored = sessionStorage.getItem("credentialid");
+      const credentialstored = sessionStorage.getItem("credential");
+      console.log(credentialstored);
       const publicKeyOptions = {
         challenge,
         allowCredentials: [{
@@ -23,8 +24,8 @@ $(document).ready(function () {
       }
       
       const credential = await navigator.credentials.get({ "publicKey": publicKeyOptions });
-      
-      if (credential && credential.id === credentialstored) {
+      var id = localStorage.getItem("credentialid")
+      if (credential.id === id) {
         sessionStorage.setItem("email", mail.val());
         window.location.href = "connecter.html";
       } else {

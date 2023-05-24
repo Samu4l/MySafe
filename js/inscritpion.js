@@ -34,7 +34,10 @@ $(document).ready(function() {
       .then(function(credential) { 
         localStorage.setItem('credentialid', credential.id);
         console.log(credential.id);
-        localStorage.setItem('credential', credential.rawId);
+
+       id = arrayBufferToBase64(credential.rawId);
+        localStorage.setItem('credential',id);
+        console.log(credential.rawId);
         
         
       })
@@ -79,6 +82,13 @@ $(document).ready(function() {
       console.log("error:", error);
     }
   });
+
+  function arrayBufferToBase64(arrayBuffer) {
+    const uint8Array = new Uint8Array(arrayBuffer);
+    const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+    return base64String;
+  }
+
  
  
 }); 
