@@ -1,3 +1,4 @@
+
 const mysafeCache = "cache-v1";
 const assets = [
   "/",
@@ -12,7 +13,7 @@ self.addEventListener('install', function(event) {
     })
   );
 });
-
+/*
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request).then(function(response) {
@@ -34,6 +35,46 @@ self.addEventListener('fetch', function(event) {
         });
 
         return response;
+      }).catch(function() {
+        // Afficher une pop-up pour informer l'utilisateur qu'il n'est pas connecté à Internet
+        self.clients.matchAll({ type: 'window' }).then(function(clients) {
+          clients.forEach(function(client) {
+            client.postMessage({ type: 'offline' });
+          });
+        });
+      });
+    })
+  );
+});
+
+*/
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.open(mysafeCache).then(function(cache) {
+      return cache.match(event.request).then(function(response) {
+        if (response) {
+          return response; // Renvoyer la réponse depuis le cache
+        }
+
+        // Si la réponse n'est pas trouvée dans le cache, la récupérer depuis le réseau
+        return fetch(event.request).then(function(networkResponse) {
+          if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+            return networkResponse; // Renvoyer la réponse depuis le réseau
+          }
+
+          // Si la réponse est valide, la cloner et l'ajouter au cache
+          var responseToCache = networkResponse.clone();
+          cache.put(event.request, responseToCache);
+
+          return networkResponse; // Renvoyer la réponse depuis le réseau
+        }).catch(function() {
+          // Afficher une pop-up pour informer l'utilisateur qu'il n'est pas connecté à Internet
+          self.clients.matchAll().then(function(clients) {
+            clients.forEach(function(client) {
+              client.postMessage({ type: 'offline' });
+            });
+          });
+        });
       });
     })
   );

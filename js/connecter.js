@@ -1,5 +1,10 @@
+
+
 $(document).ready(function() {
-  var btnDeco = $("#logoutButton");
+  const loading = $("#loading");
+ loading.show();
+
+var btnDeco = $("#logoutButton");
 var btnAdd = $("#addData");
 var url= $("#url");
 var mdp= $("#mdp");
@@ -11,8 +16,10 @@ var mdp= $("#mdp");
 
   getJsonId(email)
   .then(userData => {
+  
     // Vérifier si les données utilisateur existent
     if (userData) {
+      
       var keyValuePairs = userData.keyValuePairs || [];
       var tableBody = $("#data");
 
@@ -67,13 +74,22 @@ var mdp= $("#mdp");
         row.append(urlCell, passwordCell, deleteButtonCell);
         tableBody.append(row);
       });
+     
     }
+    console.log("end loading");
+    loading.hide();
   })
   .catch(error => {
     console.log("Erreur lors de la récupération des données JSON :", error);
   });
 
-  //}
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    if (event.data.type === 'offline') {
+      // Afficher une pop-up indiquant à l'utilisateur qu'il n'est pas connecté à Internet
+      alert("Vous n'êtes pas connecté à Internet. Veuillez vérifier votre connexion.");
+      loading.show();
+    }
+  });
 
   btnAdd.on("click", function(event) {
     event.preventDefault(); // Empêcher le comportement par défaut du bouton

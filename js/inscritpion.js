@@ -41,6 +41,13 @@ $(document).ready(function() {
         console.error(error);
       });
   });
+  
+  navigator.serviceWorker.addEventListener('message', function(event) {
+    if (event.data.type === 'offline') {
+      // Afficher une pop-up indiquant à l'utilisateur qu'il n'est pas connecté à Internet
+      alert("Vous n'êtes pas connecté à Internet. Veuillez vérifier votre connexion.");
+    }
+  });
 
   btnInscrit.on("click", function (event) {
     try {

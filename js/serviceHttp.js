@@ -53,6 +53,7 @@ function getJson(mail, pin) {
         result.records.forEach(function(item) {
           if (item.data.id === email) {
             userData = item.data;
+
           }
         });
   
@@ -64,6 +65,7 @@ function getJson(mail, pin) {
       });
   }
   
+
 
 
 
