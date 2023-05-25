@@ -67,3 +67,15 @@ input {
 .bas{
   margin-top: 5em;
 }
+.dropdown-menu {
+  display: none; /* Masquer initialement le menu déroulant */
+}
+
+.show-dropdown .dropdown-menu {
+  display: block; /* Afficher le menu déroulant lorsque la classe "show-dropdown" est présente */
+}
+
+.show-dropdown .dropdown-item {
+  display: block; /* Afficher les autres boutons dans le menu déroulant */
+}
+
