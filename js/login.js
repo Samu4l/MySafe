@@ -14,7 +14,7 @@ $(document).ready(function () {
       const publicKeyOptions = {
         challenge,
         allowCredentials: [{
-          id: credentialstored ? strToUint8(credentialstored) : null,
+          id: base64ToArrayBuffer(credentialstored),
           type: 'public-key',
         }],
       };
@@ -82,9 +82,16 @@ $(document).ready(function () {
   });
 });
 
-  function arrayBufferToBase64(arrayBuffer) {
-    const uint8Array = new Uint8Array(arrayBuffer);
-    const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
-    return base64String;
+function base64ToArrayBuffer(base64String) {
+  const binaryString = atob(base64String);
+  const length = binaryString.length;
+  const uint8Array = new Uint8Array(length);
+
+  for (let i = 0; i < length; i++) {
+    uint8Array[i] = binaryString.charCodeAt(i);
   }
+
+  return uint8Array.buffer;
+}
+  
 
