@@ -3,6 +3,15 @@ $(document).ready(function () {
   var pin = $("#pinInput");
   var btnFinger = $("#finger");
   btnFinger.hide();
+  const registerButton = $("#registerButton");
+
+  // Ajoutez un gestionnaire d'événements au clic sur le bouton
+  
+  registerButton.on("click", function() {
+    // Redirigez l'utilisateur vers la page "register.html"
+    window.location.href = "register.html";
+  
+  });
 
   btnFinger.on("click", async function(event) {
     try {

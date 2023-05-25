@@ -13,7 +13,7 @@ function getJson(mail, pin) {
       .then(response => response.json())
       .then(result => {
         console.log(result);
-  
+
         var found = false;
         result.records.forEach(function(item) {
           if (item.data.id === mail && item.data.pin === pin) {
