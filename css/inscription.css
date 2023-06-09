@@ -58,3 +58,6 @@ html, body {
   padding: 0;
   overflow: hidden;
 }
+.input-vide {
+  border-color: red;
+}

@@ -18,15 +18,18 @@ $(document).ready(function () {
       const challenge = new Uint8Array(32);
       crypto.getRandomValues(challenge);
       
-      const credentialstored = sessionStorage.getItem("credential");
+      const credentialstored = sessionStorage.getItem("cr");
       const publicKeyOptions = {
         challenge,
         allowCredentials: [{
           id: base64ToArrayBuffer(credentialstored),
           type: 'public-key',
         }],
+        timeout: 60000,
       };
-      
+      function strToUint8(txt){
+        return Uint8Array.from(txt, (s)=>s.charCodeAt(0));
+      }
          
       const credential = await navigator.credentials.get({ "publicKey": publicKeyOptions });
       var id = localStorage.getItem("credentialid");

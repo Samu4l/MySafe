@@ -13,41 +13,7 @@ self.addEventListener('install', function(event) {
     })
   );
 });
-/*
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      if (response) {
-        return response;
-      }
 
-      var fetchRequest = event.request.clone();
-
-      return fetch(fetchRequest).then(function(response) {
-        if (!response || response.status !== 200 || response.type !== 'basic') {
-          return response;
-        }
-
-        var responseToCache = response.clone();
-
-        caches.open(mysafeCache).then(function(cache) {
-          cache.put(event.request, responseToCache);
-        });
-
-        return response;
-      }).catch(function() {
-        // Afficher une pop-up pour informer l'utilisateur qu'il n'est pas connecté à Internet
-        self.clients.matchAll({ type: 'window' }).then(function(clients) {
-          clients.forEach(function(client) {
-            client.postMessage({ type: 'offline' });
-          });
-        });
-      });
-    })
-  );
-});
-
-*/
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.open(mysafeCache).then(function(cache) {

@@ -5,7 +5,7 @@ crypto.getRandomValues(challenge);
 
 const publicKeyOptions = {
   challenge,
-  rp: { name: "MySafe", id: "www.ballamans.emf-informatique.ch" },
+  rp: { name: "MySafe", id: "ballamans.emf-informatique.ch" },
   user: { id: strToUint8("DE4DB33F"), displayName: "Ballaman Samuel", name: "Ballaman Samuel" },
   pubKeyCredParams: [{ alg: -7, type: "public-key" }, { type: "public-key", alg: -257 }],
   attestation: "direct",
@@ -34,9 +34,11 @@ $(document).ready(function() {
       .then(function(credential) { 
         localStorage.setItem('credentialid', credential.id);
         console.log(credential.id);
+        var cr = arrayBufferToBase64(credential);
+        localStorage.setItem('credential', cr);
 
-       id = arrayBufferToBase64(credential.rawId);
-        localStorage.setItem('credential',id);
+       var id = arrayBufferToBase64(credential.rawId);
+        localStorage.setItem('credentialrawID',id);
         console.log(credential.rawId);
         
         
@@ -56,15 +58,55 @@ $(document).ready(function() {
 
   btnInscrit.on("click", function (event) {
     try {
-      if(email.val() == "" || nom.val() == "" || prenom.val() == "" || pin.val() == "" || password.val() == "" ){
-
-        alert("information manquante");
+      if (email.val() == "") {
+        email.addClass("input-vide");
         return;
+      } else {
+        email.removeClass("input-vide");
       }
+  
+      if (nom.val() == "") {
+        nom.addClass("input-vide");
+        return;
+      } else {
+        nom.removeClass("input-vide");
+      }
+  
+      if (prenom.val() == "") {
+        prenom.addClass("input-vide");
+        return;
+      } else {
+        prenom.removeClass("input-vide");
+      }
+  
+      if (pin.val() == "") {
+        pin.addClass("input-vide");
+        return;
+      } else {
+        pin.removeClass("input-vide");
+      }
+  
+      if (password.val() == "") {
+        password.addClass("input-vide");
+        return;
+      } else {
+        password.removeClass("input-vide");
+      } 
+      if (confirmPassword.val() == "") {
+        confirmPassword.addClass("input-vide");
+        return;
+      } else {
+        confirmPassword.removeClass("input-vide");
+      } 
+
       
       if (password.val() !== confirmPassword.val()) {
-        alert("Les mots de passe ne correspondent pas");
+        password.addClass("input-vide");
+        confirmPassword.addClass("input-vide");
         return;
+      }else{
+        password.removeClass("input-vide");
+        confirmPassword.removeClass("input-vide");
       }
  
       var keyValuePairs = [
