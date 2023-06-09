@@ -49,6 +49,16 @@ var mdp= $("#mdp");
         deleteDiv.append(deleteButton);
         deleteButtonCell.append(deleteDiv);
 
+        passwordInput.on("click", function() {
+          var password = $(this).val();
+          
+          navigator.clipboard.writeText(password)});
+
+        urlInput.on("click", function() {
+          var url = $(this).val();
+           window.location.href = url;
+        });
+
         // Ajouter un gestionnaire d'événements pour le bouton de suppression
         deleteButton.on("click", function() {
           // Obtenir les valeurs URL et mot de passe de l'entrée

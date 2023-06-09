@@ -108,6 +108,14 @@ $(document).ready(function() {
         password.removeClass("input-vide");
         confirmPassword.removeClass("input-vide");
       }
+      if(pin.val()<6){
+        pin.addClass("input-vide");
+        return;
+      } else {
+        pin.removeClass("input-vide");
+      }
+
+    
  
       var keyValuePairs = [
       ];

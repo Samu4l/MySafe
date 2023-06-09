@@ -18,7 +18,7 @@ $(document).ready(function () {
       const challenge = new Uint8Array(32);
       crypto.getRandomValues(challenge);
       
-      const credentialstored = sessionStorage.getItem("cr");
+      const credentialstored = sessionStorage.getItem("credentialrawID");
       const publicKeyOptions = {
         challenge,
         allowCredentials: [{
