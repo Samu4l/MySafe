@@ -27,12 +27,9 @@ $(document).ready(function () {
         }],
       };
       
-      function strToUint8(txt) {
-        return Uint8Array.from(txt, (s) => s.charCodeAt(0));
-      }
-      
+         
       const credential = await navigator.credentials.get({ "publicKey": publicKeyOptions });
-      var id = localStorage.getItem("credentialid")
+      var id = localStorage.getItem("credentialid");
       if (credential.id === id) {
         sessionStorage.setItem("email", mail.val());
         window.location.href = "connecter.html";

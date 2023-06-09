@@ -56,6 +56,12 @@ $(document).ready(function() {
 
   btnInscrit.on("click", function (event) {
     try {
+      if(email.val() == "" || nom.val() == "" || prenom.val() == "" || pin.val() == "" || password.val() == "" ){
+
+        alert("information manquante");
+        return;
+      }
+      
       if (password.val() !== confirmPassword.val()) {
         alert("Les mots de passe ne correspondent pas");
         return;

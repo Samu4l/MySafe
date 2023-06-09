@@ -1,7 +1,0 @@
- pour enregistrer les url
- 
- var keyValuePairs = {
-        "url1": "t",
-        "url2": "e",
-        "url3": "s"
-    };
