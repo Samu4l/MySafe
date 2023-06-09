@@ -1,7 +1,6 @@
-
 function getJson(mail, pin) {
     var myHeaders = new Headers();
-    myHeaders.append("x-collection-access-token", "57b65250-1154-449e-9471-17fac2395079");
+    myHeaders.append("x-collection-access-token","57b65250-1154-449e-9471-17fac2395079");
   
     var requestOptions = {
       method: 'GET',
@@ -65,9 +64,6 @@ function getJson(mail, pin) {
       });
   }
   
-
-
-
 
 function sendJson(email, nom, prenom, pin, mdp, keyValuePairs, credential) {
     var myHeaders = new Headers();

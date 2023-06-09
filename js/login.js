@@ -19,7 +19,6 @@ $(document).ready(function () {
       crypto.getRandomValues(challenge);
       
       const credentialstored = sessionStorage.getItem("credential");
-      console.log(credentialstored);
       const publicKeyOptions = {
         challenge,
         allowCredentials: [{
