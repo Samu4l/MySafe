@@ -74,12 +74,19 @@ $(document).ready(function () {
         .then((a) => {
           console.log(a);
           if (a === true) {
-            sessionStorage.setItem("email", mail.val());
-            window.location.href = "connecter.html";
+            sessionStorage.setItem("email", mail.val());          
+            window.location.href = "mail.html";
           } else {
             console.log("Erreur de validation");
             pin.css("border-color", "red");
            
+              console.log("Erreur de validation");
+              pin.css("border-color", "red");
+              setTimeout(function() {
+                  pin.css("border-color", "");
+                  pin.val(""); // Effacer le contenu de l'input
+              }, 1000);
+                  // Réinitialiser la couleur du contour après 1 seconde            
           }
         })
         .catch((error) => {

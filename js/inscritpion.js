@@ -61,6 +61,11 @@ $(document).ready(function() {
       if (email.val() == "") {
         email.addClass("input-vide");
         return;
+      }else if (!isValidEmail(email.val())) {
+        // L'e-mail n'est pas valide
+        email.addClass("input-invalid");
+        return;
+              
       } else {
         email.removeClass("input-vide");
       }
