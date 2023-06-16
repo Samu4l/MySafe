@@ -1,14 +1,14 @@
 $(document).ready(function() {
     var email = sessionStorage.getItem('email');
-  
+  var btnResend =$("#resendEmailBtn");
     var pin = $("#validation");
-
+    var code;
     var sendGridApiKey = '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';
     var sendGridUrl = 'https://api.sendgrid.com/v3/mail/send';
 
     // Fonction pour envoyer l'e-mail avec le code de validation
     function sendEmail() {
-    var code = generateRandomCode(6);
+     code = generateRandomCode(6);
          
     var subject = 'Code de validation';
     var body = 'Votre code de validation est : ' + code;
@@ -46,7 +46,7 @@ $(document).ready(function() {
     // Envoyer l'e-mail initial avec le code de validation
     sendEmail();
 
-    $("#resendEmailBtn").on("click", function() {
+    btnResend.on("click", function() {
       // Envoyer à nouveau l'e-mail avec le code de validation
       sendEmail();
    
