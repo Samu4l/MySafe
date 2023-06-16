@@ -130,14 +130,17 @@ btnAdd.on("click", function(event) {
 
   btnAdd.on("click", function(event) {
     event.preventDefault(); // Empêcher le comportement par défaut du bouton
-  
+   if(url.val()!=null && mdp.val()!=null){
     moJson(url.val(), mdp.val())
       .then(() => {
         location.reload(); // Recharger la page après l'ajout de données
       })
+    
       .catch(error => {
         console.log('Erreur lors de l\'ajout des données JSON :', error);
       });
+    }
+    alert("Veuiller remplir les champs");
   });
 
   var shakeThreshold = 100; // Seuil de secousse (à ajuster selon vos besoins)
