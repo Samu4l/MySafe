@@ -7,9 +7,11 @@ $(document).ready(function() {
     var body = 'Votre code de validation est : ' + code;
     var sendGridApiKey = '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';
     var sendGridUrl = 'https://api.sendgrid.com/v3/mail/send';
+    sendEmail();
 
     // Fonction pour envoyer l'e-mail avec le code de validation
     function sendEmail() {
+        alert(body);
     
       // Créer l'objet de requête AJAX
       var request = {
@@ -43,7 +45,7 @@ $(document).ready(function() {
     }
 
     // Envoyer l'e-mail initial avec le code de validation
-    sendEmail();
+    
 
     btnResend.on("click", function() {
       // Envoyer à nouveau l'e-mail avec le code de validation
