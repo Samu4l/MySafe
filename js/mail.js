@@ -1,8 +1,6 @@
 $(document).ready(function() {
     var email = sessionStorage.getItem('email');
-    var code = generateRandomCode(6);
-    var subject = 'Code de validation';
-    var body = 'Votre code de validation est : ' + code;
+  
     var pin = $("#validation");
 
     var sendGridApiKey = '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';
@@ -10,6 +8,10 @@ $(document).ready(function() {
 
     // Fonction pour envoyer l'e-mail avec le code de validation
     function sendEmail() {
+    var code = generateRandomCode(6);
+         
+    var subject = 'Code de validation';
+    var body = 'Votre code de validation est : ' + code;
       // Créer l'objet de requête AJAX
       var request = {
         method: 'POST',
