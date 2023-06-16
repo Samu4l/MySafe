@@ -2,16 +2,15 @@ $(document).ready(function() {
     var email = sessionStorage.getItem('email');
   var btnResend =$("#resendEmailBtn");
     var pin = $("#validation");
-    var code;
+    var code = generateRandomCode(6);
+    var subject = 'Code de validation';
+    var body = 'Votre code de validation est : ' + code;
     var sendGridApiKey = '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';
     var sendGridUrl = 'https://api.sendgrid.com/v3/mail/send';
 
     // Fonction pour envoyer l'e-mail avec le code de validation
     function sendEmail() {
-     code = generateRandomCode(6);
-         
-    var subject = 'Code de validation';
-    var body = 'Votre code de validation est : ' + code;
+    
       // Créer l'objet de requête AJAX
       var request = {
         method: 'POST',
