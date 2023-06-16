@@ -93,32 +93,7 @@ var mdp= $("#mdp");
     console.log("Erreur lors de la récupération des données JSON :", error);
   });
   
- // Créer les éléments HTML pour chaque paire clé-valeur
-
-
-navigator.serviceWorker.addEventListener('message', function(event) {
- if (event.data.type === 'offline') {
-   // Afficher une pop-up indiquant à l'utilisateur qu'il n'est pas connecté à Internet
-   alert("Vous n'êtes pas connecté à Internet. Veuillez vérifier votre connexion.");
-   loading.show();
- }
-});
-
-btnAdd.on("click", function(event) {
- event.preventDefault(); // Empêcher le comportement par défaut du bouton
-
- moJson(url.val(), mdp.val())
-   .then(() => {
-     location.reload(); // Recharger la page après l'ajout de données
-   })
-   .catch(error => {
-     console.log('Erreur lors de l\'ajout des données JSON :', error);
-   });
-});
-
-
-
-  
+ // Créer les éléments HTML pour chaque paire clé-valeur  
 
   navigator.serviceWorker.addEventListener('message', function(event) {
     if (event.data.type === 'offline') {
