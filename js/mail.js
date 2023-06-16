@@ -33,6 +33,7 @@ $(document).ready(function() {
           }]
         })
       };
+      request.crossDomain = true;
 
       // Envoyer la requête AJAX pour envoyer l'e-mail
       $.ajax(request)
